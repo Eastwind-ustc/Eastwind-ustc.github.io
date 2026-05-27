@@ -10,8 +10,6 @@
 // 渲染整个页面
 function render() {
 
-  // updateBGM();
-
   if (currentScene === "level_select") {
     renderLevelSelect();
     saveGame();
