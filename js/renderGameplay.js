@@ -13,9 +13,11 @@ function renderGameplay() {
             <button id="abandonBtn">
                 放弃本局
             </button>
+            
             <button id="bgmToggleBtn">
-                ${bgmEnabled ? "🔊 BGM: ON" : "🔇 BGM: OFF"}
+                ${1 ? "🔊 BGM: ON" : "🔇 BGM: OFF"}
             </button>
+            
         </div>
 
         <div class="top-bar">
@@ -64,7 +66,7 @@ function renderGameplay() {
     // 放弃按钮
     document.getElementById("abandonBtn").onclick = abandonGame;
     // 音乐切换按钮
-    document.getElementById("bgmToggleBtn").onclick = toggleBGM;
+    // document.getElementById("bgmToggleBtn").onclick = toggleBGM;
     // 在网页中找到 id 为 "nextTurnBtn" 的按钮，并保存到变量 btn
     const btn = document.getElementById("nextTurnBtn");
     btn.onclick = nextTurn;
