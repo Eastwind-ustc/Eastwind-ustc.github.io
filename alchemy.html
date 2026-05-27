@@ -7,55 +7,25 @@
 </head>
 <body>
 
-<h1>炼金术师的店铺</h1>
+<div id="sceneRoot"></div>
 
-<div class="rules">
-通过基本反应将药材制作成指定的药水交付订单, 消耗药材施放法术以辅助完成任务.<br>
-1. 每天开始时会获得两张药材牌和一个新的订单, 订单需要在一定天数内完成.<br>
-2. 将手牌填入法术栏的空位, 施放法术来获得新的药水牌. 每种法术每天只能施放一次, 但基础反应不限次数!<br>
-3. 法术需要花费资质奖章来获取使用权限, 完成炼金术师协会的专属订单以获得奖章. 即使订单需求对你来说太难也不用担心, 炼金术师协会的订单会在完成后或新的一天开始时自动更新!<br>
-4. 一天结束时, 药水牌会因无法存放而丢弃, 但药材牌会保留.<br>
-5. 如果订单没有按时完成, 店铺的营业评级会扣除一点, 扣完的话店铺就要被勒令关停了. 灵活运用基本反应和法术保卫你的店铺!
-</div>
+<!--
+<script src="js/bgm.js"></script>
+-->
 
-<div class="top-bar">
-  <button id="nextTurnBtn">下一天</button>
-  <span id="turnInfo">经营天数: 0</span>
-</div>
+<script src="js/save.js"></script>
 
-<div class="game-board">
+<script src="js/events.js"></script>
 
-  <!-- 订单区 -->
-  <div class="panel">
-    <h2>订单</h2>
-    <!-- 新增：营业评级显示区 -->
-    <div id="ratingDisplay" style="font-size:14px; margin-bottom:8px;">
-      营业评级: 3
-    </div>
-    <div id="orders"></div>
-  </div>
-
-  <!-- 法术区 -->
-  <div class="panel">
-    <h2>法术</h2>
-    <div id="spells">
-    </div>
-  </div>
-
-  <!-- 手牌区 -->
-  <div class="panel">
-    <h2>手牌</h2>
-    <div id="hand"></div>
-  </div>
-
-</div>
-
-<div id="statusMessage"></div>
+<script src="js/meta.js"></script>
+<script src="js/spawnRules.js"></script>
+<script src="js/levels.js"></script>
 
 <script src="js/state.js"></script>
 <script src="js/fractions.js"></script>
 <script src="js/cards.js"></script>
 <script src="js/hand.js"></script>
+<script src="js/orderData.js"></script>
 <script src="js/orders.js"></script>
 <script src="js/spellData.js"></script>
 <script src="js/spells.js"></script>
@@ -63,6 +33,8 @@
 <script src="js/effects.js"></script>
 <script src="js/turn.js"></script>
 <script src="js/uiBridge.js"></script>
+<script src="js/renderGameplay.js"></script>
+<script src="js/renderLevelSelect.js"></script>
 <script src="js/render.js"></script>
 <script src="js/main.js"></script>
 

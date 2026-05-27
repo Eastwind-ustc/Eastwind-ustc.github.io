@@ -34,10 +34,11 @@ function applyQualification(spellIndex) {
   render();
 }
 
+
+
 // =========================
 // ===== ORDER UI =========
 // =========================
-
 function submitOrderFromUI(orderIndex) {
 
   const selects = document.querySelectorAll(
@@ -55,10 +56,9 @@ function submitOrderFromUI(orderIndex) {
   submitOrder(orderIndex, uiState);
 }
 
-//
-//
-//
 
+
+//
 function submitAssociationFromUI() {
   const sel = document.getElementById("associationSelect");
   const idx = sel.value;
@@ -66,5 +66,23 @@ function submitAssociationFromUI() {
   if (idx === "") return;
 
   submitAssociationOrder(Number(idx));
+  render();
+}
+
+
+
+//
+function selectCard(spellIndex, slotIndex, cardIndex) {
+
+  if (!uiState.spellSelections) {
+    uiState.spellSelections = {};
+  }
+
+  if (!uiState.spellSelections[spellIndex]) {
+    uiState.spellSelections[spellIndex] = {};
+  }
+
+  uiState.spellSelections[spellIndex][slotIndex] = cardIndex;
+
   render();
 }

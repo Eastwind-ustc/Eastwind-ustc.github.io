@@ -4,51 +4,56 @@
 
 function nextTurn() {
 
+  // 回合数 +1
   turn++;
 
-  // 协会订单：每回合刷新
+  // 刷新协会订单
   associationOrder = generateAssociationOrder();
 
-  // 1. 先减少时间
+  // 已有订单剩余时间减少
   for (const o of orders) {
     o.remainingTime--;
   }
-
-  // 2. 统计超时订单
+  // 统计超时订单, 计算数量并记录
   let penalty = 0;
-
   const newOrders = [];
-
   for (const o of orders) {
-
-    if (o.remainingTime <= 0) {
+    if (o.remainingTime <= 0) { // 超时的订单不记录, 没超时的订单记录
       penalty++;
     } else {
       newOrders.push(o);
     }
   }
-
-  // 3. 扣评级
+  // 营业评级 -= 超时订单数
   state.rating -= penalty;
-
-  // 4. 更新订单列表（超时的直接消失）
+  // 更新订单列表, 留下刚才被记录的订单 (等效于超时的直接消失)
   orders = newOrders;
-
-  // 5. 游戏失败判断
+  // 如果营业评级不大于 0, 游戏失败
   if (state.rating <= 0) {
     gameOver = true;
   }
 
-  orders.push(generateOrder());
-
-  gainCard(generateHerbCard());
-  gainCard(generateHerbCard());
-
+  // 出怪
+  orders.push(
+      ...generateOrders()
+  );
+  // 如果不跳过弃置药水阶段, 就弃置所有 type 为 "药水" 的 hand
   if (!state.skipPotionDiscard) {
     hand = hand.filter(c => c.type !== "药水");
   }
-
+  // 随机获得两份原料
+  for (let i = 0; i < state.ingredientGain; i++) {
+    gainCard(generateIngredientCard());
+  }
+  // 每个法术的已使用次数变更为 0
   spells.forEach(s => s.castsUsed = 0);
 
+  // 广播
+  emitEvent(
+      "turnStart",
+      {}
+  );
+
+  // 渲染
   render();
 }

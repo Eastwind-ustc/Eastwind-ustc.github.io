@@ -1,46 +1,33 @@
-// =========================
-// ===== SLOT RESOLVER =====
-// =========================
+// 解析输入
+function resolveInputs(spell, uiState, spellIndex) {
 
-function resolveInputs(spell, uiState) {
+  const selects = document.querySelectorAll(
+      `select[data-spell="${spellIndex}"]`
+  );
 
+  if (!selects.length) {
+    // 0槽位法术
+    if (spell.slots.length === 0) {
+      return {
+        cards: [],
+        indices: []
+      };
+    }
+    return null;
+  }
+
+  // 建立卡牌列 cards 与索引列 indices (索引指示一张卡牌在手牌中的位置)
   const cards = [];
   const indices = [];
 
-  const used = new Set(); // ⭐ 防重复用
+  // 用 cards 记录一张
+  for (let i = 0; i < selects.length; i++) {
+    const idx = selects[i].value;
+    if (idx === "") return null;
 
-  for (let i = 0; i < spell.slots.length; i++) {
-
-    const idx = uiState.selected[i];
-
-/* // 调试代码
-console.log(
-  "slot", i,
-  "idx=", idx,
-  "type=", typeof idx
-);*/
-
-    // 1. 必须存在
-    if (idx === "" || idx === undefined) return null;
-
-    const nIdx = Number(idx);
-
-    // 2. 防重复选卡 ⭐核心
-    if (used.has(nIdx)) return null;
-
-    used.add(nIdx);
-
-    const card = hand[nIdx];
-
-    // 3. 卡牌必须存在
-    if (!card) return null;
-
-    cards.push(card);
-    indices.push(nIdx);
+    cards.push(hand[idx]);
+    indices.push(idx);
   }
 
-  return {
-    cards,
-    indices
-  };
+  return { cards, indices };
 }
