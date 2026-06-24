@@ -1,0 +1,269 @@
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: sans-serif;
+    background: #f0f0f0;
+}
+
+/* 界面根目录 */
+#sceneRoot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#gameRoot {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+#shopPanel {
+    display: flex;
+    flex-direction: column;
+
+    border: 2px solid #333;
+    padding: 10px;
+
+    background: #f8f8f8;
+}
+
+#shopTitle {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+
+    margin-bottom: 12px;
+
+    padding-bottom: 6px;
+    border-bottom: 1px solid #ccc;
+}
+
+#shopSlots {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.shop-slot {
+    width: 70px;
+    height: 70px;
+    border: 2px solid transparent;
+    background: white;
+    font-size: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    white-space: pre-line;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.2;
+}
+
+#battlefield {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 顶部 */
+#topBar {
+    width: 400px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* hp 文本 */
+#hpText {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* 回合结束按钮 */
+#endTurnBtn {
+    padding: 8px 16px;
+    font-size: 13px;
+    cursor: pointer;
+    border: 2px solid;
+}
+
+/* 回合结束按钮: 不可用 */
+#endTurnBtn:disabled {
+    background: gray;
+    cursor: not-allowed;
+}
+
+/* 棋盘 */
+#board {
+    position: relative;
+
+    width: 400px;
+    height: 400px;
+
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    grid-template-rows: repeat(10, 40px);
+
+    border: 2px solid #333;
+    background: white;
+}
+
+/* 棋格 */
+.cell {
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* 棋子层 */
+#pieceLayer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* 棋子 */
+.piece {
+    position: absolute;
+
+    width: 24px;
+    height: 24px;
+
+    border-radius: 50%;
+    background: #395001;
+}
+
+/* 棋子生命值显示 */
+.hp-label {
+    position: absolute;
+
+    right: -8px;
+    bottom: -12px;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    color: black;
+}
+
+/* 棋子攻击力显示 */
+.atk-label {
+    position: absolute;
+
+    left: -8px;
+    bottom: -12px;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    color: black;
+}
+
+/* 底层 */
+#bottomBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    margin-top: 10px;
+}
+
+/* 装备面板 */
+#equipmentPanel {
+    display: grid;
+    grid-template-columns: repeat(5, 70px);
+    grid-template-rows: repeat(2, 70px);
+    gap: 4px;
+    /* left: 50%; */
+    position: static;
+    transform: none;
+}
+
+/* 装备槽 */
+.equipment-slot {
+    width: 70px;
+    height: 70px;
+    border: 2px solid transparent;
+    background: white;
+    font-size: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    white-space: pre-line;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.2;
+}
+
+/* 装备槽: 选中 */
+.equipment-slot.selected {
+    border: 4px solid #999;
+}
+
+/* 装备槽: 不可用 */
+.equipment-slot.disabled {
+    background: #d9d9d9;
+}
+
+/* 游戏结束面板 */
+#gameOverPanel {
+    text-align: center;
+}
+
+/* 游戏结束文本 */
+#gameOverText {
+    color: red;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+
+
+/* 效果层 */
+#effectLayer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* 火炮-炮弹 */
+.cannon-shell {
+
+    position: absolute;
+
+    width: 12px;
+    height: 12px;
+
+    border-radius: 50%;
+
+    background: red;
+}
+
+/* 激光-效果 */
+.laser-effect {
+
+    position: absolute;
+
+    width: 4px;
+
+    background: rgba(
+            120,
+            220,
+            255,
+            0.8
+    );
+
+    top: 0;
+
+    height: 100%;
+}
