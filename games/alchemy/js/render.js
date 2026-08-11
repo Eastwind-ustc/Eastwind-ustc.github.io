@@ -2,8 +2,7 @@
 // ===== RENDER ============
 // =========================
 // 这份文件含有关于渲染页面的函数. 包括:
-// 函数 render: 渲染整个页面
-// 函数 renderOrders: 渲染订单部分
+// 函数 render:
 
 
 
@@ -38,6 +37,16 @@ function render() {
     // 结算界面
     case "settlement":
       renderSettlement();
+      saveGame();
+      break;
+    //
+    case "story":
+      renderStory();
+      saveGame();
+      break;
+    //
+    case "opening":
+      renderOpening();
       saveGame();
       break;
   }

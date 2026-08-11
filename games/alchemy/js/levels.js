@@ -8,6 +8,7 @@ const LEVEL_DATA = [
     {
         id: "tutorial",
         name: "测试关卡",
+        spellSelectionMode: "free",
         orderPool: [
             "lucky_potion",
             "cube_absorber",
@@ -37,6 +38,10 @@ const LEVEL_DATA = [
     {
         id: "level_0_1",
         name: "0-1 第一课",
+        spellSelectionMode: "free",
+        startScriptId: "level_0_1_start",
+        gameplayScriptId: "level_0_1",
+        victoryScriptId: "level_0_1_victory",
         orderPool: [
             "lucky_potion",
         ],
@@ -58,6 +63,7 @@ const LEVEL_DATA = [
     {
         id: "level_0_2",
         name: "0-2 规模提升",
+        spellSelectionMode: "free",
         orderPool: [
             "lucky_potion",
             "potion_35"
@@ -87,6 +93,55 @@ const LEVEL_DATA = [
         startingRating: 5,
         completionGold: 100,
         perfectGold: 50,
-    }
+    },
+
+    // 修复传送门
+    {
+        id: "fix_task",
+        name: "修复传送门",
+        spellSelectionMode: "fixed",
+        fixedSpellIds: [
+            "grind",
+            "filter",
+            "burn",
+            "extract",
+            "small_portal_1",
+            "small_portal_2",
+            "small_portal_3",
+            "small_portal_4",
+            "big_portal_1",
+            "big_portal_2",
+        ],
+
+        orderPool: [
+            "lucky_potion",
+            "potion_35"
+        ],
+        spawnRules: [
+            {
+                type: "weight_budget",
+                totalWeightFnId: "level_0_2"
+            },
+            {
+                type: "fixed_schedule",
+                schedule: {
+                    1: [{orderId: "lucky_potion", count: 1}],
+                    2: [{orderId: "lucky_potion", count: 1}],
+                    3: [{orderId: "potion_35", count: 1}],
+                    6: [{orderId: "lucky_potion", count: 2}],
+                    7: [{orderId: "lucky_potion", count: 1},{orderId: "potion_35", count: 1}],
+                    8: [{orderId: "lucky_potion", count: 1}],
+                    9: [{orderId: "potion_35", count: 2}],
+                    10: [{orderId: "lucky_potion", count: 1},{orderId: "potion_35", count: 1}],
+                }
+            }
+        ],
+        finalSpawnTurn: 10,
+        startingIngredients: 2,
+        ingredientGain: 2,
+        startingRating: 5,
+        completionGold: 100,
+        perfectGold: 50,
+    },
 
 ];

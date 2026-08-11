@@ -39,6 +39,13 @@ function hydrateSpell(spell) {
 
 // 保存
 function saveGame() {
+
+    console.log(
+        "SAVE",
+        currentScene,
+        structuredClone(scriptState)
+    );
+
     // 需要保存的数据
     const saveData = {
         // 局外状态
@@ -49,6 +56,8 @@ function saveGame() {
         currentLevelId: currentLevel?.id ?? null,
         // 状态
         state,
+        // 剧情状态
+        scriptState,
         // 游戏结束与否状态
         gameOver,
     };
@@ -68,6 +77,9 @@ function loadGame() {
     const save = JSON.parse(raw);
     // 把存档 save 中的 metaState 属性复制到当前运行中的 metaState 对象里
     Object.assign(metaState, save.metaState);
+    // 不再读取旧选卡
+    metaState.selectedSpellIds = [];
+
     // 恢复当前界面
     currentScene = save.currentScene;
     // 在 LEVEL_DATA 中查找 id 等于存档记录的关卡, 并赋给 currentLevel; 找不到则设为 null
@@ -79,6 +91,12 @@ function loadGame() {
         ) ?? null;
     // 把存档中的 state 内容复制到当前游戏状态对象 state
     Object.assign(state, save.state);
+    // ***
+    Object.assign(scriptState, save.scriptState ?? {});
+    console.log(
+        "AFTER LOAD",
+        structuredClone(scriptState)
+    );
     // 恢复法术运行时函数引用: 对每个法术调用 hydrateSpell 补回函数等运行时内容 (因为 JSON 不保存函数)
     state.spells = (save.state.spells ?? []).map(hydrateSpell);
     // 返回 true, 表示读档成功

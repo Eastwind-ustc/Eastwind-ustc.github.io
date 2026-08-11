@@ -301,6 +301,7 @@ function renderHand() {
 
 // 放弃单局游戏
 function abandonGame() {
+    endLevelScript();
     clearSave();
     currentScene = "level_select";
     currentLevel = null;

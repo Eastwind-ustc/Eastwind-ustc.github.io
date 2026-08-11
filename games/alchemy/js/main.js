@@ -46,7 +46,40 @@ function createGame(levelId, spellIds) {
 
 // 主程序
 if (!loadGame()) {
-    render();
+
+    // 没有存档
+    // 如果尚未看过开场白，则进入开场白
+    if (!metaState.hasSeenOpening) {
+
+        currentScene = "opening";
+
+        render();
+
+        startOpening("opening_0_1");
+
+    } else {
+
+        currentScene = "main_menu";
+
+        render();
+
+    }
+
 } else {
-    render();
+
+    // 有存档
+    // 如果尚未看过开场白，则进入开场白
+    if (!metaState.hasSeenOpening) {
+
+        currentScene = "opening";
+
+        render();
+
+        startOpening("opening_0_1");
+
+    } else {
+
+        render();
+
+    }
 }

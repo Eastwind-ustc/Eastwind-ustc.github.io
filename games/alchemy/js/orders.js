@@ -196,9 +196,10 @@ function generateAssociationOrder() {
     id: "association",
     name: "协会订单",
     requirement: Math.floor(Math.random() * 101),
-    rewardDesc: "一枚资质奖章.",
+    rewardDesc: "一枚资质奖章, 一份随机原料.",
     rewardEffect(ctx) {
       state.medals += 1;
+      gainCard(generateIngredientCard());
     }
   };
 }

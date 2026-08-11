@@ -384,6 +384,32 @@ const SPELL_EFFECTS = {
       amount: 13
     };
   },
+
+  // 小型传送门
+  small_portal(ctx) {
+    return {
+      type: "gainCard",
+      card: generateIngredientCard(),
+      consume: []
+    };
+  },
+  // 大型传送门
+  big_portal(ctx) {
+    return {
+      type: "multiEffect",
+      effects: [
+        {
+          type: "gainCard",
+          card: generateIngredientCard()
+        },
+        {
+          type: "gainCard",
+          card: generateIngredientCard()
+        }
+      ],
+      consume: []
+    };
+  },
 };
 
 

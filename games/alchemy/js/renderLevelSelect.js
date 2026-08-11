@@ -96,6 +96,16 @@ function goSpellSelect(){
             l =>
                 l.id === metaState.selectedLevelId
         );
+
+    // 根据关卡的选卡模式处理
+    if (currentLevel.spellSelectionMode === "free") {
+        // 自由选择法术
+        metaState.selectedSpellIds = [];
+    } else if (currentLevel.spellSelectionMode === "fixed") {
+        // 固定法术
+        metaState.selectedSpellIds = [...currentLevel.fixedSpellIds];
+    }
+
     // 将当前界面设定为 "spell_select"
     currentScene = "spell_select";
     // 重新渲染

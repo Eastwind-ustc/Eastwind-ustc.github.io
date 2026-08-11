@@ -113,19 +113,36 @@ function startGame() {
         metaState.selectedLevelId,
         metaState.selectedSpellIds
     );
-    // currentScene 切换到 "gameplay", 表示切换至游玩界面
-    currentScene = "gameplay";
     // 触发事件 "游戏开始"
     emitEvent("gameStart", {state});
     onGameEvent("gameStart", {state});
     // 保存游戏
     saveGame();
-    // 渲染
-    render();
-    // 启动关卡 id 对应的对话脚本
-    startLevelScript(currentLevel.id);
-    // 渲染对话脚本
-    renderScriptOverlay();
+
+    // 判断是否存在开始剧情
+    if (currentLevel?.startScriptId &&
+        !hasWatchedScript(currentLevel.id, "start")
+    ) {
+
+        // 启动开始剧情
+        startLevelScript(
+            currentLevel.startScriptId,
+            "gameplay",
+            "start"
+        );
+
+        // 进入剧情界面
+        currentScene = "story";
+
+        // 渲染剧情界面
+        render();
+
+    } else {
+
+        // 没有开始剧情
+        // 直接进入 gameplay
+        enterGameplay();
+    }
 }
 
 
@@ -210,14 +227,28 @@ function renderSpellCard(spell, i, mode = "panel") {
         const selected =metaState.selectedSpellIds.includes(spell.id);
         // 对于选中法术, CSS 类名添加 selected
         if (selected) div.classList.add("selected");
-        // 点击整个卡片
-        div.onclick = () => {
-            // 如果 spell 已选中且已选法术数量达到法术装配上限 , 中止
-            if (!selected && metaState.selectedSpellIds.length >= metaState.selectedSpellsLimit) return;
-            // 否则, 切换 spell 的选中与否状态
-            toggleSpellSelect(spell.id);
-        };
+
+        // 固定法术模式下，法术卡不可手动选择
+        if (currentLevel.spellSelectionMode === "fixed") {
+            // 添加固定法术视觉标记
+            div.classList.add("spell-fixed");
+        } else {
+            // 自由选择模式下，法术卡可以点击
+            div.onclick = () => {
+                // 如果 spell 已选中且已选法术数量达到法术装配上限，中止
+                if (
+                    !selected &&
+                    metaState.selectedSpellIds.length >=
+                    metaState.selectedSpellsLimit
+                ) {
+                    return;
+                }
+                // 切换 spell 的选中与否状态
+                toggleSpellSelect(spell.id);
+            };
+        }
     }
+
     // 法术区模式
     else if (mode === "panel") {
         // 添加只读槽位

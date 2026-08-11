@@ -2,6 +2,9 @@
 // ===== TURN SYSTEM =======
 // =========================
 
+
+
+//
 function nextTurn() {
 
   if (!canDoAction("nextTurn")) return;
@@ -40,7 +43,7 @@ function nextTurn() {
   if (!state.skipPotionDiscard) {
     state.hand = state.hand.filter(c => c.type !== "药水");
   }
-  // 随机获得两份原料
+  // 获得原料
   for (let i = 0; i < state.ingredientGain; i++) {
     gainCard(generateIngredientCard());
   }
@@ -59,12 +62,40 @@ function nextTurn() {
 
 
 
+//
+function enterGameplay() {
+
+  // 进入打关界面
+  currentScene = "gameplay";
+
+  //
+  saveGame();
+
+  // 渲染打关界面
+  render();
+
+  // 如果当前关卡存在局内教程脚本
+  if (currentLevel?.gameplayScriptId) {
+
+    // 启动局内教程
+    startLevelScript(
+        currentLevel.gameplayScriptId,
+        null
+    );
+
+    saveGame();
+  }
+}
+
+
+
 // 检查失败
 function checkDefeat() {
 
   if (state.rating <= 0) {
     state.gameResult = "defeat";
     gameOver = true;
+    endLevelScript();
     saveGame();
   }
 
@@ -75,14 +106,41 @@ function checkDefeat() {
 
 // 检查胜利
 function checkVictory() {
+
   if (!currentLevel) return;
   if (state.turn < currentLevel.finalSpawnTurn) return;
   if (state.orders.length > 0) return;
   if (state.rating <= 0) return;
+
+  // 设置游戏胜利状态
   state.gameResult = "victory";
   gameOver = true;
-  // 游戏胜利后, 保存游戏
+
+  // 结束 Gameplay 中可能正在进行的剧情
+  endLevelScript();
+
+  // 游戏胜利后保存
   saveGame();
-  // 渲染
-  // render();
+
+  // 判断是否存在未播放的通关剧情
+  if (currentLevel.victoryScriptId &&
+      !hasWatchedScript(currentLevel.id, "victory")
+  ) {
+    // 进入剧情界面
+    currentScene = "story";
+    // 渲染剧情界面
+    render();
+    // 启动通关剧情
+    startLevelScript(
+        currentLevel.victoryScriptId,
+        "settlement",
+        "victory"
+    );
+  } else {
+    // 没有通关剧情或已经播放过
+    currentScene = "settlement";
+
+    render();
+  }
+
 }

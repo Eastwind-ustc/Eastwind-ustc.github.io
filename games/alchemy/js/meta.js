@@ -14,8 +14,13 @@ const metaState = {
     // 法术装配上限
     selectedSpellsLimit: 10,
     // 金币
-    gold: 0
+    gold: 0,
+
+    hasSeenOpening: false,
+
+    // 已观看剧情记录
+    watchedScripts: {}
 };
 
 // 当前界面
-let currentScene = "main_menu";
+let currentScene = "opening";
